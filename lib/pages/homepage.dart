@@ -214,7 +214,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 5,
         shadowColor: Colors.grey.withOpacity(0.5),
       ),
-      drawer: CustomDrawer(savedRecipes: [],),
+      drawer: CustomDrawer( ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:foodiez/models/user.dart';
 import 'package:foodiez/services/auth.dart';
 import 'package:foodiez/services/client.dart';
@@ -68,8 +69,11 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
  
-  Future<void> signOut() async {
+  void signOut() async {
+     var prefs = await SharedPreferences.getInstance();
+     prefs.remove("username");
+      prefs.remove("token");
     user = null; 
-    notifyListeners();
+    notifyListeners;
   }
 }

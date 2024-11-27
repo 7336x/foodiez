@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodiez/pages/homepage.dart';
 import 'package:foodiez/pages/sign_in_page.dart';
 import 'package:foodiez/pages/sign_up_page.dart';
+import 'package:foodiez/providers/RecipeProvider.dart';
 import 'package:foodiez/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthProvider>(create: (_) => authProvider),
+        ChangeNotifierProvider<RecipeProvider>(create: (_) => RecipeProvider()), // Add RecipeProvider
       ],
       child: const FoodiezApp(),
     ),
@@ -35,12 +37,10 @@ class FoodiezApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
-        '/sign-in': (context) => SignInScreen(),
+        '/': (context) => const HomePage(),
+        '/sign-in': (context) =>  SignInScreen(),
         '/sign-up': (context) => SignUpScreen(),
-        
       },
-      
     );
   }
 }

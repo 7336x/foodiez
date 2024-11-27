@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foodiez/pages/MyRecipesPage.dart';
+import 'package:foodiez/providers/RecipeProvider.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final List<Map<String, String>> savedRecipes;
-
-  const CustomDrawer({
-    super.key,
-    required this.savedRecipes,
-  });
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +66,12 @@ class CustomDrawer extends StatelessWidget {
                   label: 'My Recipes',
                   onTap: () {
                     Navigator.pop(context); // Close drawer
+                    // Access saved recipes from RecipeProvider
+                    final savedRecipes = context.read<RecipeProvider>().recipes;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MyRecipesPage(savedRecipes: savedRecipes),
+                        builder: (context) => MyRecipesPage( ),
                       ),
                     );
                   },
