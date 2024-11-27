@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foodiez/providers/RecipeProvider.dart';
 import 'package:provider/provider.dart';
 
-
 class CreateRecipePage extends StatefulWidget {
   final List<String> ingredients;
 
@@ -33,28 +32,62 @@ class _CreateRecipePageState extends State<CreateRecipePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Recipe"),
+        title: const Text(
+          "Create Recipe",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 2,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Recipe Name"),
+            // Recipe Name Field
+            const Text(
+              "Recipe Name",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
             TextField(
               controller: recipeNameController,
-              decoration: const InputDecoration(hintText: "Enter the recipe name"),
+              decoration: InputDecoration(
+                hintText: "Enter the recipe name",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
-            const Text("Description"),
+
+            // Description Field
+            const Text(
+              "Description",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
             TextField(
               controller: descriptionController,
-              decoration: const InputDecoration(hintText: "Enter recipe description"),
+              maxLines: 4,
+              decoration: InputDecoration(
+                hintText: "Enter recipe description",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
-            const Text("Ingredients"),
-            for (int i = 0; i < 5; i++)
+
+            // Ingredients Dropdowns
+            const Text(
+              "Ingredients",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            for (int i = 0; i < 5; i++) ...[
               DropdownButtonFormField<String>(
                 value: selectedIngredients[i],
                 items: widget.ingredients
@@ -68,30 +101,77 @@ class _CreateRecipePageState extends State<CreateRecipePage> {
                     selectedIngredients[i] = value;
                   });
                 },
-                decoration: const InputDecoration(hintText: "Choose your ingredient"),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 15,
+                  ),
+                  hintText: "Choose your ingredient",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[100],
+                ),
               ),
-            const SizedBox(height: 20),
-            const Text("How to Cook"),
+              const SizedBox(height: 10),
+            ],
+
+            // How to Cook Field
+            const Text(
+              "How to Cook",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
             TextField(
               controller: howToCookController,
-              decoration: const InputDecoration(hintText: "Enter cooking steps"),
+              maxLines: 6,
+              decoration: InputDecoration(
+                hintText: "Enter cooking steps",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final newRecipe = {
-                  'recipeName': recipeNameController.text,
-                  'description': descriptionController.text,
-                  'ingredients': selectedIngredients.whereType<String>().toList(),
-                  'steps': howToCookController.text,
-                };
 
-                // Add recipe to provider
-                Provider.of<RecipeProvider>(context, listen: false).addRecipe(newRecipe);
+            // Save Button
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey, // Gray background
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 15,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  final newRecipe = {
+                    'recipeName': recipeNameController.text,
+                    'description': descriptionController.text,
+                    'ingredients':
+                        selectedIngredients.whereType<String>().toList(),
+                    'steps': howToCookController.text,
+                  };
 
-                Navigator.pop(context); // Go back after saving
-              },
-              child: const Text("Save Recipe"),
+                  // Add recipe to provider
+                  Provider.of<RecipeProvider>(context, listen: false)
+                      .addRecipe(newRecipe);
+
+                  Navigator.pop(context); // Go back after saving
+                },
+                child: const Text(
+                  "Save Recipe",
+                  style: TextStyle(
+                    fontSize: 18, // Larger font size for the button
+                    color: Colors.white, // White font
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
