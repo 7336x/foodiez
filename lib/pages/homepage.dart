@@ -22,11 +22,11 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final List<Map<String, dynamic>> categories = [
-    {'image': 'assets/images/chinessfood.webp', 'title': 'Chinese Food'},
-    {'image': 'assets/images/Egyptfood.webp', 'title': 'Egyptian Food'},
-    {'image': 'assets/images/kuwaitifood.jpeg', 'title': 'Kuwaiti Food'},
-    {'image': 'images/indianfood.jpg', 'title': 'Indian Food'},
-    {'image': 'images/japanfood.jpg', 'title': 'Japanese Food'},
+    {'image': 'assets/images/chinese.png', 'title': 'Chinese Food'},
+    {'image': 'assets/images/egypt.png', 'title': 'Egyptian Food'},
+    {'image': 'assets/images/kuwait.png', 'title': 'Kuwaiti Food'},
+    {'image': 'assets/images/indian.png', 'title': 'Indian Food'},
+    {'image': 'assets/images/japanese.png', 'title': 'Japanese Food'},
   ];
 
   final List<Map<String, dynamic>> popularRecipes = [
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
     {
-      'image': 'images/butterchicken.jpeg',
+      'image': 'assets/images/butterchicken.jpeg',
       'name': 'Butter Chicken',
       'description': 'A creamy and spiced Indian curry with chicken.',
       'ingredients': ['Chicken', 'Tomatoes', 'Cream', 'Butter'],
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
     {
-      'image': 'images/salmonsushi.jpg',
+      'image': 'assets/images/salmonsushi.jpg',
       'name': 'Sushi',
       'description': 'A Japanese dish made with vinegared rice and fresh seafood.',
       'ingredients': ['Rice', 'Salmon', 'Seaweed', 'Soy Sauce'],
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
     {
-      'image': 'images/KungPaoChicken.jpeg',
+      'image': 'assets/images/KungPaoChicken.jpeg',
       'name': 'Kung Pao Chicken',
       'description': 'A spicy Chinese stir-fry with peanuts and chili peppers.',
       'ingredients': ['Chicken', 'Peanuts', 'Chili', 'Soy Sauce'],
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
     {
-      'image': 'images/fattah.jpg',
+      'image': 'assets/images/fattah.jpg',
       'name': 'Fattah',
       'description': 'A Middle Eastern dish made with rice, meat, and bread.',
       'ingredients': ['Rice', 'Bread', 'Lamb', 'Yogurt'],
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
     {
-      'image': 'images/harres.jpeg',
+      'image': 'assets/images/harres.jpeg',
       'name': 'Harees',
       'description': 'A traditional Arabian dish made with wheat and meat.',
       'ingredients': ['Wheat', 'Meat', 'Salt', 'Butter'],
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
     {
-      'image': 'images/tandorechicken.webp',
+      'image': 'assets/images/tandorechicken.webp',
       'name': 'Tandoori Chicken',
       'description': 'An Indian dish marinated with yogurt and spices, roasted.',
       'ingredients': ['Chicken', 'Yogurt', 'Spices'],
@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
     {
-      'image': 'images/Ramen.webp',
+      'image': 'assets/images/Ramen.webp',
       'name': 'Ramen',
       'description': 'A Japanese noodle soup dish with savory broth.',
       'ingredients': ['Noodles', 'Egg', 'Broth', 'Pork'],
@@ -281,7 +281,7 @@ SizedBox(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: InkWell(
           onTap: () {
-            // Navigate based on the category title
+            ////// navigate based on the category title
             if (categories[index]['title'] == 'Chinese Food') {
               Navigator.push(
                 context,
