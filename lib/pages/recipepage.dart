@@ -7,7 +7,8 @@ class RecipePage extends StatelessWidget {
   final List<String> ingredients;
   final List<String> steps;
 
-  RecipePage({
+  const RecipePage({
+    super.key,
     required this.name,
     required this.image,
     required this.description,
@@ -20,12 +21,12 @@ class RecipePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           name,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
@@ -35,7 +36,7 @@ class RecipePage extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.bookmark_border, color: Colors.black),
+            icon: const Icon(Icons.bookmark_border, color: Colors.black),
             onPressed: () {
               ////// bookmark action but without any action :)
             },
@@ -48,7 +49,7 @@ class RecipePage extends StatelessWidget {
           children: [
             /////// image section
             ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
@@ -72,13 +73,13 @@ class RecipePage extends StatelessWidget {
                       children: [
                         Text(
                           name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 5),
-                        Text(
+                        const Text(
                           "Western", /////  category
                           style: TextStyle(
                             fontSize: 16,
@@ -90,7 +91,7 @@ class RecipePage extends StatelessWidget {
                   ),
                   /*
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.yellow[100],
                       borderRadius: BorderRadius.circular(15),
@@ -99,7 +100,7 @@ class RecipePage extends StatelessWidget {
                       children: [
                         Icon(Icons.star, color: Colors.yellow[800]),
                         const SizedBox(width: 5),
-                        Text(
+                        const Text(
                           "4.5", ///// rating
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -115,8 +116,8 @@ class RecipePage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             /////// recipes description
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "Description",
                 style: TextStyle(
@@ -151,8 +152,8 @@ class RecipePage extends StatelessWidget {
             const SizedBox(height: 30),
             */
             ///////// ingredients title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "Ingredients",
                 style: TextStyle(
@@ -174,7 +175,7 @@ class RecipePage extends StatelessWidget {
                       Expanded(
                         child: Text(
                           ingredient,
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ],
@@ -184,8 +185,8 @@ class RecipePage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             /////// steps title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "How to Cook",
                 style: TextStyle(
@@ -209,7 +210,7 @@ class RecipePage extends StatelessWidget {
                       children: [
                         Text(
                           "$index. ",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
@@ -217,7 +218,7 @@ class RecipePage extends StatelessWidget {
                         Expanded(
                           child: Text(
                             step,
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ),
                       ],
@@ -238,7 +239,7 @@ class RecipePage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: Colors.yellow[100],
             shape: BoxShape.circle,
@@ -248,7 +249,7 @@ class RecipePage extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),

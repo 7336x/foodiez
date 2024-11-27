@@ -6,9 +6,12 @@ import 'package:foodiez/pages/indianRecipes.dart';
 import 'package:foodiez/pages/japaneserecipes.dart';
 import 'package:foodiez/pages/kuwaitirecipes.dart';
 import 'package:foodiez/pages/recipepage.dart';
+import 'package:foodiez/widgets/drawer.dart';
 
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -45,7 +48,8 @@ class _HomePageState extends State<HomePage> {
     {
       'image': 'assets/images/Egyptfood.webp',
       'name': 'Koshari',
-      'description': 'A traditional Egyptian comfort food made with rice and lentils.',
+      'description':
+          'A traditional Egyptian comfort food made with rice and lentils.',
       'ingredients': ['Rice', 'Lentils', 'Tomato Sauce', 'Crispy Onions'],
       'steps': [
         'Cook rice and lentils separately.',
@@ -57,7 +61,8 @@ class _HomePageState extends State<HomePage> {
     {
       'image': 'assets/images/kuwaitifood.jpeg',
       'name': 'Machboos',
-      'description': 'A flavorful Kuwaiti rice dish with spiced chicken or lamb.',
+      'description':
+          'A flavorful Kuwaiti rice dish with spiced chicken or lamb.',
       'ingredients': ['Rice', 'Chicken', 'Spices', 'Onions', 'Tomatoes'],
       'steps': [
         'Marinate chicken with spices.',
@@ -81,7 +86,8 @@ class _HomePageState extends State<HomePage> {
     {
       'image': 'assets/images/salmonsushi.jpg',
       'name': 'Sushi',
-      'description': 'A Japanese dish made with vinegared rice and fresh seafood.',
+      'description':
+          'A Japanese dish made with vinegared rice and fresh seafood.',
       'ingredients': ['Rice', 'Salmon', 'Seaweed', 'Soy Sauce'],
       'steps': [
         'Cook rice and season with vinegar.',
@@ -129,7 +135,8 @@ class _HomePageState extends State<HomePage> {
     {
       'image': 'assets/images/tandorechicken.webp',
       'name': 'Tandoori Chicken',
-      'description': 'An Indian dish marinated with yogurt and spices, roasted.',
+      'description':
+          'An Indian dish marinated with yogurt and spices, roasted.',
       'ingredients': ['Chicken', 'Yogurt', 'Spices'],
       'steps': [
         'Marinate chicken with yogurt and spices.',
@@ -166,7 +173,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _startAutoScroll() {
-    _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (_currentPage < imagePaths.length - 1) {
         _currentPage++;
       } else {
@@ -174,7 +181,7 @@ class _HomePageState extends State<HomePage> {
       }
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 700),
+        duration: const Duration(milliseconds: 700),
         curve: Curves.easeInOut,
       );
     });
@@ -191,7 +198,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'DishCraft',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -204,10 +211,11 @@ class _HomePageState extends State<HomePage> {
         elevation: 5,
         shadowColor: Colors.grey.withOpacity(0.5),
       ),
+      drawer: CustomDrawer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /////// 3 Photos 
+          /////// 3 Photos
           SizedBox(
             height: 250,
             child: PageView.builder(
@@ -223,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                         BoxShadow(
                           color: Colors.black.withOpacity(0.2),
                           blurRadius: 10,
-                          offset: Offset(0, 5),
+                          offset: const Offset(0, 5),
                         ),
                       ],
                     ),
@@ -260,8 +268,8 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 20),
           ////// categories section
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               'Food Type Categories',
               style: TextStyle(
@@ -271,6 +279,49 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 16),
+
+          SizedBox(
+            height: 150,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(
+                            categories[index]['image']!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        categories[index]['title']!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
 SizedBox(
   height: 150,
   child: ListView.builder(
@@ -331,6 +382,7 @@ SizedBox(
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
                         Container(color: Colors.grey),
+
                   ),
                 ),
               ),
@@ -353,8 +405,8 @@ SizedBox(
   
           const SizedBox(height: 20),
           ////////// title for popular recipes
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
               'Popular Recipes',
               style: TextStyle(
@@ -368,7 +420,7 @@ SizedBox(
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
                 ),
@@ -376,7 +428,7 @@ SizedBox(
                   BoxShadow(
                     color: Colors.black.withOpacity(0.2),
                     blurRadius: 10,
-                    offset: Offset(0, -5),
+                    offset: const Offset(0, -5),
                   ),
                 ],
               ),
@@ -393,14 +445,16 @@ SizedBox(
                             image: recipe['image']!,
                             name: recipe['name']!,
                             description: recipe['description']!,
-                            ingredients: List<String>.from(recipe['ingredients']),
+                            ingredients:
+                                List<String>.from(recipe['ingredients']),
                             steps: List<String>.from(recipe['steps']),
                           ),
                         ),
                       );
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -409,7 +463,7 @@ SizedBox(
                             BoxShadow(
                               color: Colors.black.withOpacity(0.2),
                               blurRadius: 5,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -427,7 +481,7 @@ SizedBox(
                                   width: 100,
                                   height: 100,
                                   color: Colors.grey,
-                                  child: Center(
+                                  child: const Center(
                                     child: Icon(Icons.broken_image, size: 50),
                                   ),
                                 ),
@@ -437,7 +491,7 @@ SizedBox(
                             Expanded(
                               child: Text(
                                 recipe['name']!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),

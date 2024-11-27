@@ -1,14 +1,14 @@
 class User {
-  String email;
+  String username;
   String token;
 
-  User({required this.email, required this.token});
+  User({required this.username, required this.token});
 
   User.fromJson(Map<String, dynamic> json)
-      : email = json['email'] as String,
+      : username = json['username'] as String,
         token = json['token'] as String;
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{'email': email, 'password': token};
+    return <String, dynamic>{'username': username, 'password': token};
   }
 }
