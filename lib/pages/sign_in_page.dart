@@ -30,15 +30,36 @@ class SignInScreen extends StatelessWidget {
               obscureText: true,
             ),
             ElevatedButton(
+              // onPressed: () async {
+              //   try {
+              //     // wait for authentication
+              //     await context.read<AuthProvider>().signIn(
+              //         username: usernameController.text,
+              //         password: passwordController.text);
+
+              //     var user = context.read<AuthProvider>().user;
+              //     print("You are logged in as ${user!.username}");
+              //   } on DioException catch (e) {
+              //     if (e.response == null) return;
+              //     if (e.response!.data == null) return;
+
+              //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              //         content: Text(
+              //             e.response!.data['message'] ?? "Unexpected error")));
+              //   }
+              // },
               onPressed: () async {
                 try {
                   // wait for authentication
                   await context.read<AuthProvider>().signIn(
-                      email: usernameController.text,
+                      username: usernameController.text,
                       password: passwordController.text);
 
                   var user = context.read<AuthProvider>().user;
                   print("You are logged in as ${user!.username}");
+
+                  // Navigate to home page
+                  Navigator.pushReplacementNamed(context, '/home');
                 } on DioException catch (e) {
                   if (e.response == null) return;
                   if (e.response!.data == null) return;

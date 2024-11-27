@@ -33,7 +33,7 @@ class SignUpScreen extends StatelessWidget {
                 try {
                   // wait for authentication
                   await context.read<AuthProvider>().signup(
-                      email: usernameController.text,
+                      username: usernameController.text,
                       password: passwordController.text);
 
                   var user = context.read<AuthProvider>().user;
