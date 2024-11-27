@@ -157,8 +157,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
   ];
-
-  int _currentPage = 0;
+ int _currentPage = 0;
   late Timer _timer;
 
   @override
@@ -215,7 +214,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /////// 3 Photos
+          // Carousel
           SizedBox(
             height: 250,
             child: PageView.builder(
@@ -249,7 +248,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 16),
-          //////// dots indicator
+          // Dots indicator
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
@@ -267,7 +266,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 20),
-          ////// categories section
+          // Categories section
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
@@ -279,7 +278,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 16),
-
+          // Categories ListView
           SizedBox(
             height: 150,
             child: ListView.builder(
@@ -288,123 +287,82 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 120,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
+                  child: InkWell(
+                    onTap: () {
+                      if (categories[index]['title'] == 'Chinese Food') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChineseRecipesPage()),
+                        );
+                      } else if (categories[index]['title'] == 'Egyptian Food') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EgyptianRecipesPage()),
+                        );
+                      } else if (categories[index]['title'] == 'Kuwaiti Food') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => KuwaitiRecipesPage()),
+                        );
+                      } else if (categories[index]['title'] == 'Indian Food') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => IndianRecipesPage()),
+                        );
+                      } else if (categories[index]['title'] == 'Japanese Food') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => JapaneseRecipesPage()),
+                        );
+                      }
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 120,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.asset(
+                              categories[index]['image']!,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(color: Colors.grey),
                             ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            categories[index]['image']!,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) =>
-                                Container(color: Colors.grey),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        categories[index]['title']!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                        const SizedBox(height: 8),
+                        Text(
+                          categories[index]['title']!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
-                    ],
-SizedBox(
-  height: 150,
-  child: ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: categories.length,
-    itemBuilder: (context, index) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: InkWell(
-          onTap: () {
-            ////// navigate based on the category title
-            if (categories[index]['title'] == 'Chinese Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ChineseRecipesPage()),
-              );
-            } else if (categories[index]['title'] == 'Egyptian Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EgyptianRecipesPage()),
-              );
-            } else if (categories[index]['title'] == 'Kuwaiti Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => KuwaitiRecipesPage()),
-              );
-            } else if (categories[index]['title'] == 'Indian Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => IndianRecipesPage()),
-              );
-            } else if (categories[index]['title'] == 'Japanese Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => JapaneseRecipesPage()),
-              );
-            }
-          },
-          child: Column(
-            children: [
-              Container(
-                width: 120,
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
+                      ],
                     ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    categories[index]['image']!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        Container(color: Colors.grey),
-
                   ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                categories[index]['title']!,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           ),
-        ),
-      );
-    },
-  ),
-),
-
-  
           const SizedBox(height: 20),
-          ////////// title for popular recipes
+          // Popular Recipes
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
@@ -415,7 +373,6 @@ SizedBox(
               ),
             ),
           ),
-          ///////// popular recipes list
           Expanded(
             child: Container(
               decoration: BoxDecoration(

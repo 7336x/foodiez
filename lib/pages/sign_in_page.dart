@@ -12,30 +12,91 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sign In"),
+        title: const Text(
+           "DishCraft",
+          style: TextStyle(
+            fontWeight: FontWeight.bold, 
+            fontSize: 30,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 2,
       ),
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            const Text("Sign In"),
-            TextField(
-              decoration: const InputDecoration(hintText: 'Username'),
-              controller: usernameController,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
             ),
-            TextField(
-              decoration: const InputDecoration(hintText: 'Password'),
+            child: Image.asset(
+              'images/logo.png', 
+              height: 250,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            "Sign In",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              color: Color.fromARGB(255, 4, 4, 4),
+            ),
+          ),
+          const SizedBox(height: 20),
+          
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: 'Username',
+                border: OutlineInputBorder(),
+                hintStyle: TextStyle(color: Colors.red),
+              ),
+              controller: usernameController,
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
+          const SizedBox(height: 20),
+         
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: 'Password',
+                border: OutlineInputBorder(),
+                hintStyle: TextStyle(color: Colors.red),
+              ),
               controller: passwordController,
               obscureText: true,
+              style: const TextStyle(color: Colors.red),
             ),
-            ElevatedButton(
+          ),
+          const SizedBox(height: 20),
+          
+          SizedBox(
+            width: 150, 
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.grey, 
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               onPressed: () async {
                 try {
-                  // wait for authentication
+                  
                   await context.read<AuthProvider>().signIn(
-                      email: usernameController.text,
-                      password: passwordController.text);
+                        email: usernameController.text,
+                        password: passwordController.text,
+                      );
 
                   var user = context.read<AuthProvider>().user;
                   print("You are logged in as ${user!.username}");
@@ -43,15 +104,29 @@ class SignInScreen extends StatelessWidget {
                   if (e.response == null) return;
                   if (e.response!.data == null) return;
 
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          e.response!.data['message'] ?? "Unexpected error")));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(e.response!.data['message'] ??
+                          "Unexpected error"),
+                    ),
+                  );
                 }
               },
-              child: Text('Sign In'),
+              child: const Text(
+                "Sign In",
+                style: TextStyle(
+                  color: Colors.white, 
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 50),
+          Text(
+            context.read<AuthProvider>().user?.username ?? "Not Logged in",
+            style: const TextStyle(color: Colors.red),
+          ),
+        ],
       ),
     );
   }
