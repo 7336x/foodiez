@@ -67,4 +67,9 @@ class AuthProvider extends ChangeNotifier {
     // assign in state
     notifyListeners();
   }
+ 
+  Future<void> signOut() async {
+    user = null; 
+    notifyListeners();
+  }
 }

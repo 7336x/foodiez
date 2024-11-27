@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:foodiez/pages/MyRecipesPage.dart';
 
 class CustomDrawer extends StatelessWidget {
+  final List<Map<String, String>> savedRecipes;
+
+  const CustomDrawer({
+    super.key,
+    required this.savedRecipes,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -26,7 +34,6 @@ class CustomDrawer extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        
                       ),
                     ),
                     SizedBox(height: 5),
@@ -54,6 +61,20 @@ class CustomDrawer extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context); // Close drawer
                     Navigator.pushNamed(context, '/home'); // Navigate to Home
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.book,
+                  label: 'My Recipes',
+                  onTap: () {
+                    Navigator.pop(context); // Close drawer
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyRecipesPage(savedRecipes: savedRecipes),
+                      ),
+                    );
                   },
                 ),
                 _buildDrawerItem(
@@ -86,7 +107,6 @@ class CustomDrawer extends StatelessWidget {
               ],
             ),
           ),
-       
         ],
       ),
     );

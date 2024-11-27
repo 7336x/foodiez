@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:foodiez/pages/chineserecipes.dart';
+import 'package:foodiez/pages/createrecipe.dart';
 import 'package:foodiez/pages/egyptionrecipes.dart';
 import 'package:foodiez/pages/indianRecipes.dart';
 import 'package:foodiez/pages/japaneserecipes.dart';
 import 'package:foodiez/pages/kuwaitirecipes.dart';
 import 'package:foodiez/pages/recipepage.dart';
 import 'package:foodiez/widgets/drawer.dart';
-
+import 'package:foodiez/pages/MyRecipesPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -157,7 +158,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
   ];
- int _currentPage = 0;
+    int _currentPage = 0;
   late Timer _timer;
 
   @override
@@ -173,16 +174,19 @@ class _HomePageState extends State<HomePage> {
 
   void _startAutoScroll() {
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
-      if (_currentPage < imagePaths.length - 1) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
+      if (_pageController.hasClients) {
+        if (_currentPage < imagePaths.length - 1) {
+          _currentPage++;
+        } else {
+          _currentPage = 0;
+        }
+
+        _pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 700),
+          curve: Curves.easeInOut,
+        );
       }
-      _pageController.animateToPage(
-        _currentPage,
-        duration: const Duration(milliseconds: 700),
-        curve: Curves.easeInOut,
-      );
     });
   }
 
@@ -210,7 +214,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 5,
         shadowColor: Colors.grey.withOpacity(0.5),
       ),
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(savedRecipes: [],),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -359,6 +363,48 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Make Your Own Recipe Section
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Click here to make your own recipe",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.arrow_forward, color: Colors.black),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CreateRecipePage(
+                         
+                          ingredients: [
+                            'Chicken',
+                            'Rice',
+                            'Tomato Sauce',
+                            'Onions',
+                            'Soy Sauce',
+                            'Bell Peppers',
+                            'Garlic',
+                            'Cream',
+                            'Yogurt',
+                            'Butter',
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 20),

@@ -38,7 +38,9 @@ class FoodiezApp extends StatelessWidget {
         '/': (context) => HomePage(),
         '/sign-in': (context) => SignInScreen(),
         '/sign-up': (context) => SignUpScreen(),
+        
       },
+      
     );
   }
 }
