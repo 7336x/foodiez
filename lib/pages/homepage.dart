@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
       ],
     },
   ];
-    int _currentPage = 0;
+  int _currentPage = 0;
   late Timer _timer;
 
   @override
@@ -214,7 +214,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 5,
         shadowColor: Colors.grey.withOpacity(0.5),
       ),
-      drawer: CustomDrawer( ),
+      drawer: CustomDrawer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -299,7 +299,8 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                               builder: (context) => ChineseRecipesPage()),
                         );
-                      } else if (categories[index]['title'] == 'Egyptian Food') {
+                      } else if (categories[index]['title'] ==
+                          'Egyptian Food') {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -317,7 +318,8 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                               builder: (context) => IndianRecipesPage()),
                         );
-                      } else if (categories[index]['title'] == 'Japanese Food') {
+                      } else if (categories[index]['title'] ==
+                          'Japanese Food') {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -386,7 +388,6 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => const CreateRecipePage(
-                         
                           ingredients: [
                             'Chicken',
                             'Rice',

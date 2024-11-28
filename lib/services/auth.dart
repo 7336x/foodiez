@@ -1,25 +1,29 @@
+import 'package:dio/dio.dart';
 import 'package:foodiez/models/user.dart';
 import 'package:foodiez/services/client.dart';
 
-/// Calls API `/signup` by sending email and password in body
-Future<User> signupAPI(String username, String password) async {
-  // send request to API and store response
-  var response = await dio.post("/auth/signup", data: {
-    "username": username,
-    "password": password,
-  });
+class AuthServices {
+  Future<Map<String, String>> signupAPI({required User user}) async {
+    try {
+      Response response = await dio.post('/auth/signup', data: user.toJson());
+      return {'token': response.data["token"]};
+    } on DioException catch (error) {
+      print(error.response!.data["error"]["message"]);
+      return {'error': error.response!.data["error"]["message"]};
+    }
+  }
 
-  // parse response from Map into User object and return it
-  return User.fromJson(response.data['data']);
-}
-
-Future<User> signInAPI(String username, String password) async {
-  // Send request to API and store the response
-  var response = await dio.post("/auth/signin", data: {
-    "username": username,
-    "password": password,
-  });
-
-  // Parse response from Map into User object and return it
-  return User.fromJson(response.data['data']);
+  Future<String> loginApi({required User user}) async {
+    late String token;
+    try {
+      // print(user.toJson());
+      Response response = await dio.post('/auth/signin', data: user.toJson());
+      token = response.data["token"];
+      // print(token);
+    } on DioException catch (error) {
+      print(error.response!);
+      return error.response!.data["error"]["message"];
+    }
+    return token;
+  }
 }

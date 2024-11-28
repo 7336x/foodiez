@@ -10,7 +10,7 @@ class MyRecipesPage extends StatelessWidget {
     final recipes = Provider.of<RecipeProvider>(context).recipes;
 
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         title: const Text(
           "My Recipes",
           style: TextStyle(fontWeight: FontWeight.bold),

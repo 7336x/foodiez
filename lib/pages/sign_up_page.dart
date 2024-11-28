@@ -15,7 +15,7 @@ class SignUpScreen extends StatelessWidget {
         title: const Text(
           "DishCraft",
           style: TextStyle(
-            fontWeight: FontWeight.bold, 
+            fontWeight: FontWeight.bold,
             fontSize: 30,
           ),
         ),
@@ -27,7 +27,6 @@ class SignUpScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          
           ClipRRect(
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
@@ -50,7 +49,6 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
@@ -64,7 +62,6 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
@@ -79,12 +76,11 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          
           SizedBox(
-            width: 150, 
+            width: 150,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey, 
+                backgroundColor: Colors.grey,
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -92,22 +88,21 @@ class SignUpScreen extends StatelessWidget {
               ),
               onPressed: () async {
                 try {
-                  
                   await context.read<AuthProvider>().signup(
-                        email: usernameController.text,
+                        username: usernameController.text,
                         password: passwordController.text,
                       );
 
                   var user = context.read<AuthProvider>().user;
-                  print("You are logged in as ${user!.username}");
+                  print("You are signed up as ${user!.username}");
                 } on DioException catch (e) {
                   if (e.response == null) return;
                   if (e.response!.data == null) return;
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(e.response!.data['message'] ??
-                          "Unexpected error"),
+                      content: Text(
+                          e.response!.data['message'] ?? "Unexpected error"),
                     ),
                   );
                 }
@@ -115,7 +110,7 @@ class SignUpScreen extends StatelessWidget {
               child: const Text(
                 "Sign Up",
                 style: TextStyle(
-                  color: Colors.white, 
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),

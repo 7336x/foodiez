@@ -13,9 +13,9 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-           "DishCraft",
+          "DishCraft",
           style: TextStyle(
-            fontWeight: FontWeight.bold, 
+            fontWeight: FontWeight.bold,
             fontSize: 30,
           ),
         ),
@@ -27,14 +27,13 @@ class SignInScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          
           ClipRRect(
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20),
             ),
             child: Image.asset(
-              'images/logo.png', 
+              'images/logo.png',
               height: 250,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -50,7 +49,6 @@ class SignInScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
@@ -64,7 +62,6 @@ class SignInScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-         
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
@@ -79,12 +76,11 @@ class SignInScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          
           SizedBox(
-            width: 150, 
+            width: 150,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey, 
+                backgroundColor: Colors.grey,
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -92,9 +88,8 @@ class SignInScreen extends StatelessWidget {
               ),
               onPressed: () async {
                 try {
-                  
-                  await context.read<AuthProvider>().signIn(
-                        email: usernameController.text,
+                  await context.read<AuthProvider>().signin(
+                        username: usernameController.text,
                         password: passwordController.text,
                       );
 
@@ -106,8 +101,8 @@ class SignInScreen extends StatelessWidget {
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(e.response!.data['message'] ??
-                          "Unexpected error"),
+                      content: Text(
+                          e.response!.data['message'] ?? "Unexpected error"),
                     ),
                   );
                 }
@@ -115,7 +110,7 @@ class SignInScreen extends StatelessWidget {
               child: const Text(
                 "Sign In",
                 style: TextStyle(
-                  color: Colors.white, 
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),

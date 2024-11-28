@@ -9,14 +9,11 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  var authProvider = AuthProvider();
-  await authProvider.loadPreviousUser();
-
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthProvider>(create: (_) => authProvider),
-        ChangeNotifierProvider<RecipeProvider>(create: (_) => RecipeProvider()), // Add RecipeProvider
+        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<RecipeProvider>(create: (_) => RecipeProvider()),
       ],
       child: const FoodiezApp(),
     ),
@@ -38,7 +35,7 @@ class FoodiezApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/sign-in': (context) =>  SignInScreen(),
+        '/sign-in': (context) => SignInScreen(),
         '/sign-up': (context) => SignUpScreen(),
       },
     );

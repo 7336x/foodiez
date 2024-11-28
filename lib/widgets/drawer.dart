@@ -15,17 +15,17 @@ class CustomDrawer extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
             color: const Color.fromARGB(255, 230, 226, 221),
-            child: Row(
+            child: const Row(
               children: [
                 CircleAvatar(
                   radius: 40,
                   backgroundColor: Colors.white,
                   child: Icon(Icons.person, size: 40, color: Colors.grey),
                 ),
-                const SizedBox(width: 20),
+                SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'DishCraft',
                       style: TextStyle(
@@ -71,7 +71,7 @@ class CustomDrawer extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MyRecipesPage( ),
+                        builder: (context) => const MyRecipesPage(),
                       ),
                     );
                   },
@@ -82,7 +82,8 @@ class CustomDrawer extends StatelessWidget {
                   label: 'Sign In',
                   onTap: () {
                     Navigator.pop(context); // Close drawer
-                    Navigator.pushNamed(context, '/sign-in'); // Navigate to Sign In
+                    Navigator.pushNamed(
+                        context, '/sign-in'); // Navigate to Sign In
                   },
                 ),
                 _buildDrawerItem(
@@ -91,7 +92,8 @@ class CustomDrawer extends StatelessWidget {
                   label: 'Sign Up',
                   onTap: () {
                     Navigator.pop(context); // Close drawer
-                    Navigator.pushNamed(context, '/sign-up'); // Navigate to Sign Up
+                    Navigator.pushNamed(
+                        context, '/sign-up'); // Navigate to Sign Up
                   },
                 ),
                 _buildDrawerItem(
@@ -100,7 +102,8 @@ class CustomDrawer extends StatelessWidget {
                   label: 'Sign Out',
                   onTap: () {
                     Navigator.pop(context); // Close drawer
-                    Navigator.pushNamed(context, '/sign-out'); // Navigate to Sign In after sign-out
+                    Navigator.pushNamed(context,
+                        '/sign-out'); // Navigate to Sign In after sign-out
                   },
                 ),
               ],

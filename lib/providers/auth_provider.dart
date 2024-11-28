@@ -1,79 +1,78 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:foodiez/models/user.dart';
 import 'package:foodiez/services/auth.dart';
 import 'package:foodiez/services/client.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Auth State is represented  with user object. If it's null, user is not authenticated.
-
 class AuthProvider extends ChangeNotifier {
-  AuthProvider() {
-    print("I have created");
-  }
+  String token = ""; //"error", "email", "token"
   User? user;
 
-  Future<void> signup({required String email, required String password}) async {
-    // state mutation (set user object)
-    user = await signupAPI(email, password);
+  Future<Map<String, String>> signup(
+      {required String username, required String password}) async {
+    var response = await AuthServices()
+        .signupAPI(user: User(username: username, token: password));
+    if (response['token'] != null) {
+      _setToken(username, response['token']!);
+    }
+    print(response['token'] ?? 'No token');
     notifyListeners();
-
-    //Set authorization header in Dio client
-    dio.options.headers[HttpHeaders.authorizationHeader] =
-        "Bearer ${user!.token}";
-
-    // Storing username and token using shared_prefrences
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setString("username", user!.username);
-    prefs.setString("token", user!.token);
+    return response;
   }
 
-  Future<void> signIn({required String email, required String password}) async {
-    try {
-      // Call API to sign in
-      user = await signInAPI(email, password);
+  Future<String> signin(
+      {required String username, required String password}) async {
+    token = await AuthServices()
+        .loginApi(user: User(username: username, token: password));
+    // this.user = user;
+    _setToken(username, token);
+    // print(token);
+    user = User(username: username, token: token);
+    notifyListeners();
+    return token;
+  }
+
+  bool isAuth() {
+    return (user != null && token.isEmpty);
+  }
+
+  Future<void> initAuth() async {
+    await getToken();
+    if (isAuth()) {
+      dio.options.headers = {
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+      };
+      user = User(username: user!.username, token: token);
+      print('Bearer $token');
       notifyListeners();
-
-      // Set authorization header in Dio client
-      dio.options.headers[HttpHeaders.authorizationHeader] =
-          "Bearer ${user!.token}";
-
-      // Storing username and token using shared_preferences
-      var prefs = await SharedPreferences.getInstance();
-      prefs.setString("username", user!.username);
-      prefs.setString("token", user!.token);
-    } catch (e) {
-      throw Exception("Sign in failed: ${e.toString()}");
     }
   }
 
-  Future<void> loadPreviousUser() async {
-    // read from shared
-    var prefs = await SharedPreferences.getInstance();
+  void _setToken(String username, String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("username", username);
+    prefs.setString("token", token);
+    notifyListeners();
+  }
+
+  Future<void> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var username = prefs.getString("username");
     var token = prefs.getString("token");
 
-    if (username == null || token == null) {
-      prefs.remove("username");
-      prefs.remove("token");
-      return;
-    }
+    if (username == null || token == null) return;
 
-    dio.options.headers[HttpHeaders.authorizationHeader] = "Bearer $token";
-
-    // create user object
-    user = User(token: token, username: username);
-    // assign in state
+    user = User(username: username, token: token);
     notifyListeners();
   }
- 
-  void signOut() async {
-     var prefs = await SharedPreferences.getInstance();
-     prefs.remove("username");
-      prefs.remove("token");
-    user = null; 
-    notifyListeners;
+
+  void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('username');
+    prefs.remove('token');
+    user = null;
+    notifyListeners();
   }
 }
