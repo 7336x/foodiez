@@ -15,9 +15,10 @@ class AuthProvider extends ChangeNotifier {
   }
   User? user;
 
-  Future<void> signup({required String email, required String password}) async {
+  Future<void> signup(
+      {required String username, required String password}) async {
     // state mutation (set user object)
-    user = await signupAPI(email, password);
+    user = await signupAPI(username, password);
     notifyListeners();
 
     //Set authorization header in Dio client
@@ -30,15 +31,17 @@ class AuthProvider extends ChangeNotifier {
     prefs.setString("token", user!.token);
   }
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> signIn(
+      {required String username, required String password}) async {
     try {
       // Call API to sign in
-      user = await signInAPI(email, password);
+      user = await signInAPI(username, password);
       notifyListeners();
 
       // Set authorization header in Dio client
       dio.options.headers[HttpHeaders.authorizationHeader] =
           "Bearer ${user!.token}";
+      print(user!.token);
 
       // Storing username and token using shared_preferences
       var prefs = await SharedPreferences.getInstance();

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:foodiez/models/user.dart';
 import 'package:foodiez/services/client.dart';
 
@@ -10,7 +12,11 @@ Future<User> signupAPI(String username, String password) async {
   });
 
   // parse response from Map into User object and return it
-  return User.fromJson(response.data['data']);
+  if (response.data != null && response.data['data'] != null) {
+    return User.fromJson(response.data['data']);
+  } else {
+    throw Exception('Failed to load user data');
+  }
 }
 
 Future<User> signInAPI(String username, String password) async {
@@ -21,5 +27,6 @@ Future<User> signInAPI(String username, String password) async {
   });
 
   // Parse response from Map into User object and return it
+  print(response.data);
   return User.fromJson(response.data['data']);
 }
