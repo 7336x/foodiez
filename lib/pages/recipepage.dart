@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RecipePage extends StatelessWidget {
+class RecipePage extends StatefulWidget {
   final String name;
   final String image;
   final String description;
@@ -17,6 +17,14 @@ class RecipePage extends StatelessWidget {
   });
 
   @override
+  State<RecipePage> createState() => _RecipePageState();
+}
+
+class _RecipePageState extends State<RecipePage> {
+  String selectedDifficulty = "Medium";
+  final List<String> difficultyLevels = ["Easy", "Medium", "Hard"];
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -25,7 +33,7 @@ class RecipePage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          name,
+          widget.name,
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -36,9 +44,15 @@ class RecipePage extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.bookmark_border, color: Colors.black),
+            icon: const Icon(Icons.favorite_border, color: Colors.red),
             onPressed: () {
-              ////// bookmark action but without any action :)
+              // Add to favorites action
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.share, color: Colors.black),
+            onPressed: () {
+              // Share recipe action
             },
           ),
         ],
@@ -47,32 +61,32 @@ class RecipePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /////// image section
+            /////// Image Section
             ClipRRect(
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
               child: Image.asset(
-                image,
+                widget.image,
                 height: 250,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 20),
-            /////// recipe information
+
+            ////// Recipe Info Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          name,
+                          widget.name,
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -80,42 +94,32 @@ class RecipePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         const Text(
-                          "Western", /////  category
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
+                          "Western", // Recipe category
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
                     ),
                   ),
-                  /*
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.yellow[100],
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.yellow[800]),
-                        const SizedBox(width: 5),
-                        const Text(
-                          "4.5", ///// rating
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  */
+               
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            /////// recipes description
+
+            /////// Preparation Time Section
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                "Preparation Time: 30 mins",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            ////// Description Section
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
@@ -130,28 +134,13 @@ class RecipePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                description,
+                widget.description,
                 style: TextStyle(fontSize: 16, color: Colors.grey[700]),
               ),
             ),
             const SizedBox(height: 20),
-            ////////  for attributes icons (time, servings, calories, difficulty)
-            /*
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildAttributeCard(Icons.access_time, "35 mins"),
-                  _buildAttributeCard(Icons.group, "03 Servings"),
-                  _buildAttributeCard(Icons.local_fire_department, "103 Cal"),
-                  _buildAttributeCard(Icons.layers, "Easy"),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            */
-            ///////// ingredients title
+
+            /////// Ingredients Section
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
@@ -163,11 +152,10 @@ class RecipePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            //////// ingredients list
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
-                children: ingredients.map((ingredient) {
+                children: widget.ingredients.map((ingredient) {
                   return Row(
                     children: [
                       Icon(Icons.circle, size: 8, color: Colors.yellow[800]),
@@ -184,7 +172,8 @@ class RecipePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            /////// steps title
+
+            /////// Steps Section
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
@@ -196,11 +185,10 @@ class RecipePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            ////// recipes steps list
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
-                children: steps.asMap().entries.map((entry) {
+                children: widget.steps.asMap().entries.map((entry) {
                   int index = entry.key + 1;
                   String step = entry.value;
                   return Padding(
@@ -231,30 +219,6 @@ class RecipePage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  ////////to create attribute cards
-  Widget _buildAttributeCard(IconData icon, String label) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: Colors.yellow[100],
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: Colors.yellow[800], size: 24),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-          ),
-        ),
-      ],
     );
   }
 }
